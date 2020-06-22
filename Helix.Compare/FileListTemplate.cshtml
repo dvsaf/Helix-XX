@@ -1,0 +1,84 @@
+﻿@model Helix.Compare.FileListModel
+
+<!DOCTYPE html>
+<html>
+
+<head lang='ru'>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+  <title>@Model.Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <link rel='stylesheet' href='bootstrap.css'>
+  <link rel='stylesheet' type='text/css' href='stylesheet.css'>
+  <script src='jquery-3.5.1.js'></script>
+  <script src='bootstrap.js'></script>
+  <script>
+    $(document).on("click", ".spoiler-trigger", function () {
+      $(this).parents("tr").nextUntil(":not(.spoiler-block)").slideToggle(300);
+      $(this).find("span").toggle();
+    });
+
+    $(document).on("click", ".spoiler-trigger-all", function () {
+      $(".spoiler-block").slideToggle(300);
+      $(this).find("span").toggle()
+    });
+  </script>
+</head>
+
+<body>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-2 col-md-offset-10'>
+      <label class='switch'>
+        <input type='checkbox' id='darkSwitch'>
+        <span class='slider round'></span>
+      </label>
+      <label for='darkSwitch'>Ночной режим</label>
+    </div>
+    <script src='dark-mode-switch.js'></script>
+  </div>
+  <div class='row'>
+    <h1>@Model.Title</h1>
+  </div>
+  <div class='row'>
+    <div class='spoiler-trigger-all-div'>
+      <a href='javascript:void(0);' class='spoiler-trigger-all'>
+        <span style='display: none;'>Свернуть всё</span>
+        <span>Развернуть всё</span>
+      </a>
+    </div>
+  </div>
+  <div class='row'>
+    <table title='@Model.Title' class='table table-hover'>
+      <thead>
+      <tr>
+        <th width='100%'>Имя файла</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach (var folder in Model.FileTree)
+      {
+        <tr>
+          <td>
+            <span class='folder-name'>Папка @folder.Key</span>
+            <a href='javascript:void(0);' class='spoiler-trigger'>
+              <span>…</span>
+              <span style='display: none;'>…</span>
+            </a>
+          </td>
+        </tr>
+        @foreach (var fileRow in folder)
+        {
+          <tr class='spoiler-block' style='display: none;'>
+            <td width='100%'>
+              <span class='file-name'>@fileRow</span>
+            </td>
+          </tr>
+        }
+      }
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+
+</html>

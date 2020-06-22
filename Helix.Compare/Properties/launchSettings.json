@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Helix.Compare — Windows": {
+      "commandName": "Project",
+      "commandLineArgs": "--old-fx=C:\\Users\\dvsaf\\Work\\Helix-XX\\Executables462 --new-fx=C:\\Users\\dvsaf\\Work\\Helix-XX\\Executables48"
+    },
+    "Helix.Compare — macOS": {
+      "commandName": "Project",
+      "commandLineArgs": "--old-fx=/Users/dvsaf/Work/Helix-XX/Executables462 --new-fx=/Users/dvsaf/Work/Helix-XX/Executables48"
+    }
+  }
+}

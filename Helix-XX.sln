@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helix.Extract", "Helix.Extract\Helix.Extract.csproj", "{C7C10B5C-972F-4E0E-B413-63FAB4FCEB48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helix.Commons", "Helix.Commons\Helix.Commons.csproj", "{0260A2CB-68F3-4750-81F3-3502BB9B2874}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helix.Compare", "Helix.Compare\Helix.Compare.csproj", "{CDBC5876-FDA6-4956-B9D0-B1D7B4424519}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Helix.Shared", "Helix.Shared\Helix.Shared.shproj", "{1F6995F3-6C93-43F1-A8DE-7FB8396847DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7C10B5C-972F-4E0E-B413-63FAB4FCEB48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C10B5C-972F-4E0E-B413-63FAB4FCEB48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C10B5C-972F-4E0E-B413-63FAB4FCEB48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C10B5C-972F-4E0E-B413-63FAB4FCEB48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0260A2CB-68F3-4750-81F3-3502BB9B2874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0260A2CB-68F3-4750-81F3-3502BB9B2874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0260A2CB-68F3-4750-81F3-3502BB9B2874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0260A2CB-68F3-4750-81F3-3502BB9B2874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDBC5876-FDA6-4956-B9D0-B1D7B4424519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDBC5876-FDA6-4956-B9D0-B1D7B4424519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDBC5876-FDA6-4956-B9D0-B1D7B4424519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDBC5876-FDA6-4956-B9D0-B1D7B4424519}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

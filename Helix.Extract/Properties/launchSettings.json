@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Helix.Extract — .NET 4.8 — macOS": {
+      "commandName": "Project",
+      "commandLineArgs": "--source-folder=/Users/dvsaf/Work/Helix-XX/Files48 --target-folder=/Users/dvsaf/Work/Helix-XX/Executables48"
+    },
+    "Helix.Extract — .NET 4.6.2 — macOS": {
+      "commandName": "Project",
+      "commandLineArgs": "--source-folder=/Users/dvsaf/Work/Helix-XX/Files462 --target-folder=/Users/dvsaf/Work/Helix-XX/Executables462"
+    },
+    "Helix.Extract — .NET 4.8 — Windows": {
+      "commandName": "Project",
+      "commandLineArgs": "--source-folder=C:\\Users\\dvsaf\\Work\\Helix-XX\\Files48 --target-folder=C:\\Users\\dvsaf\\Work\\Helix-XX\\Executables48"
+    },
+    "Helix.Extract — .NET 4.6.2 — Windows": {
+      "commandName": "Project",
+      "commandLineArgs": "--source-folder=C:\\Users\\dvsaf\\Work\\Helix-XX\\Files462 --target-folder=C:\\Users\\dvsaf\\Work\\Helix-XX\\Executables462"
+    }
+  }
+}
