@@ -121,8 +121,8 @@ namespace Helix.Compare
 
             var typesInBoth = types462.Intersect(types48).ToImmutableList();
             
-            var typesCompareModel = new TypesCompareModel(fileName, typesAdded, typesRemoved, typesInBoth,
-                new MethodsCompareModel());
+            var typesCompareModel = new FilesCompareModel(fileName, typesAdded, typesRemoved, typesInBoth,
+                new TypesCompareModel());
             typesInBoth.ForEach(
                 typeName => CompareMethods(
                     file462.Find(typeName, false),

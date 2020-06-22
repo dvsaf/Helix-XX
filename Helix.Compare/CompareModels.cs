@@ -2,15 +2,15 @@ using System.Collections.Generic;
 
 namespace Helix.Compare
 {
-    public class TypesCompareModel
+    public class FilesCompareModel
     {
         public readonly string FileName;
         public readonly IEnumerable<string> TypesAdded;
         public readonly IEnumerable<string> TypesRemoved;
         public readonly IEnumerable<string> TypesInBoth;
-        public readonly MethodsCompareModel MethodsCompareModel;
+        public readonly IEnumerable<TypesCompareModel> MethodsCompareModel;
 
-        public TypesCompareModel(string fileName, IEnumerable<string> typesAdded, IEnumerable<string> typesRemoved, IEnumerable<string> typesInBoth, MethodsCompareModel methodsCompareModel)
+        public FilesCompareModel(string fileName, IEnumerable<string> typesAdded, IEnumerable<string> typesRemoved, IEnumerable<string> typesInBoth, IEnumerable<TypesCompareModel> methodsCompareModel)
         {
             IReadOnlyCollection<string> d;
             
@@ -22,8 +22,19 @@ namespace Helix.Compare
         }
     }
 
-    public class MethodsCompareModel
+    public class TypesCompareModel
     {
-        
+        public readonly string MethodName;
+        public readonly IEnumerable<string> MethodsAdded;
+        public readonly IEnumerable<string> MethodsRemoved;
+        public readonly IEnumerable<string> MethodsChanged;
+
+        public TypesCompareModel(string methodName, IEnumerable<string> methodsAdded, IEnumerable<string> methodsRemoved, IEnumerable<string> methodsChanged)
+        {
+            MethodName = methodName;
+            MethodsAdded = methodsAdded;
+            MethodsRemoved = methodsRemoved;
+            MethodsChanged = methodsChanged;
+        }
     }
 }
