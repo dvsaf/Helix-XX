@@ -18,9 +18,9 @@ namespace Helix.Commons
             // Поэтому перед передачей шаблона на обработку директива удаляется. 
             //
             var template =
-                File.ReadAllLines(fileName)
-                    .Where(line => !line.StartsWith("@model"))
-                    .Aggregate((s1, s2) => s1 + Environment.NewLine + s2);
+                string.Join(Environment.NewLine,
+                    File.ReadAllLines(fileName)
+                    .Where(line => !line.StartsWith("@model")));
             var taskAwaiter = Task.Run(() => Engine.Razor.CompileRunner<TModel>(template)).GetAwaiter();
 
             return model => taskAwaiter.GetResult().Run(model);

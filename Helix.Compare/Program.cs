@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 using Helix.Commons;
 
 namespace Helix.Compare
@@ -12,6 +13,15 @@ namespace Helix.Compare
     {
         private static string _root462;
         private static string _root48;
+
+        private static readonly Func<FileListModel, string> FileListModelTransform = PageTransform
+            .CompileTransform<FileListModel>("FileListTemplate.cshtml");
+
+        private static readonly Func<FilesCompareModel, string> FilesCompareModelTransform = PageTransform
+            .CompileTransform<FilesCompareModel>("CompareTemplate.cshtml");
+
+        private static readonly Func<FilesCompareModel, string> FilesCompareModelVerboseTransform = PageTransform
+            .CompileTransform<FilesCompareModel>("VerboseCompareTemplate.cshtml");
 
         private static void Main(string[] args)
         {
@@ -30,9 +40,6 @@ namespace Helix.Compare
 
         private static ImmutableList<string> CompareFiles()
         {
-            var transform = PageTransform
-                .CompileTransform<FileListModel>("FileListTemplate.cshtml");
-
             var files462 = Directory.EnumerateFiles(_root462, "*.*", SearchOption.AllDirectories)
                 .Select(file => Path.GetRelativePath(_root462, file))
                 .ToImmutableList();
@@ -40,52 +47,46 @@ namespace Helix.Compare
                 .Select(file => Path.GetRelativePath(_root48, file))
                 .ToImmutableList();
 
-            var filesAdded = files48.Except(files462).ToImmutableList();
-            File.WriteAllText(
-                "FilesAdded.html",
-                transform(new FileListModel("Добавленные файлы", filesAdded)));
-            File.WriteAllLines("NativeFilesAdded.list",
-                filesAdded.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
-            File.WriteAllLines("ClrFilesAdded.list",
-                filesAdded.Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+            // var filesAdded = files48.Except(files462).ToImmutableList();
+            // File.WriteAllText(
+            //     "FilesAdded.html",
+            //     FileListModelTransform(new FileListModel("Добавленные файлы", filesAdded)));
+            // File.WriteAllLines("NativeFilesAdded.list",
+            //     filesAdded.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+            // File.WriteAllLines("ClrFilesAdded.list",
+            //     filesAdded.Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName))));
 
-            var filesRemoved = files462.Except(files48).ToImmutableList();
-            File.WriteAllText(
-                "FilesRemoved.html",
-                transform(new FileListModel("Удалённые файлы", filesRemoved)));
+            // var filesRemoved = files462.Except(files48).ToImmutableList();
+            // File.WriteAllText(
+            //     "FilesRemoved.html",
+            //     FileListModelTransform(new FileListModel("Удалённые файлы", filesRemoved)));
 
             var filesInBoth = files462.Intersect(files48).ToImmutableList();
 
             var filesEqual = filesInBoth.Where(AreFilesEqual).ToImmutableList();
-            File.WriteAllText(
-                "FilesEqual.html",
-                transform(new FileListModel("Не изменившиеся файлы", filesEqual)));
+            // File.WriteAllText(
+            //     "FilesEqual.html",
+            //     FileListModelTransform(new FileListModel("Не изменившиеся файлы", filesEqual)));
 
             var filesChanged = filesInBoth.Except(filesEqual).ToImmutableList();
-            File.WriteAllText(
-                "FilesChanged.html",
-                transform(new FileListModel("Изменившиеся файлы", filesChanged)));
+            // File.WriteAllText(
+            //     "FilesChanged.html",
+            //     FileListModelTransform(new FileListModel("Изменившиеся файлы", filesChanged)));
 
-            File.WriteAllLines("NativeFilesChanged.list",
-                filesChanged.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
-            
+            // File.WriteAllLines("NativeFilesChanged.list",
+            //     filesChanged.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+
             var clrFilesChanged =
                 filesChanged
                     .Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName)))
                     .ToImmutableList();
             File.WriteAllText(
                 "ClrFilesChanged.html",
-                transform(new FileListModel("Изменившиеся сборки", clrFilesChanged)));
+                FileListModelTransform(new FileListModel("Изменившиеся сборки", clrFilesChanged)));
 
             Console.WriteLine("Отчёты по файлам сформированы");
 
             return clrFilesChanged;
-        }
-        
-        private static void PrintList(string title, List<string> list)
-        {
-            Console.WriteLine("==== " + title);
-            list.ForEach(Console.WriteLine);
         }
 
         private static bool AreFilesEqual(string fileName)
@@ -120,16 +121,41 @@ namespace Helix.Compare
             // PrintList("Удалённые типы", typesRemoved);
 
             var typesInBoth = types462.Intersect(types48).ToImmutableList();
-            
-            var typesCompareModel = new FilesCompareModel(fileName, typesAdded, typesRemoved, typesInBoth,
-                new TypesCompareModel());
-            typesInBoth.ForEach(
-                typeName => CompareMethods(
-                    file462.Find(typeName, false),
-                    file48.Find(typeName, false)));
+
+            var filesCompareModel = new FilesCompareModel(fileName, typesAdded, typesRemoved,
+                typesInBoth.Select(
+                    typeName => CompareTypes(
+                        file462.Find(typeName, false),
+                        file48.Find(typeName, false))));
+            File.WriteAllText(
+                $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — Compare.html",
+                FilesCompareModelTransform(CleanupFilesCompareModel(filesCompareModel)));
+            File.WriteAllText(
+                $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — VerboseCompare.html",
+                FilesCompareModelVerboseTransform(filesCompareModel));
         }
 
-        private static void CompareMethods(TypeDef typeDef462, TypeDef typeDef48)
+        private static FilesCompareModel CleanupFilesCompareModel(FilesCompareModel filesCompareModel) =>
+            new FilesCompareModel(
+                    filesCompareModel.FileName,
+                    filesCompareModel.TypesAdded,
+                    filesCompareModel.TypesRemoved,
+                    filesCompareModel.TypesCompareResult
+                        .Select(CleanupTypesCompareModel)
+                        .Where(model =>
+                            model.MethodsAdded.Any() 
+                            || model.MethodsRemoved.Any()
+                            || model.MethodsCompareResult.Any()));
+
+        private static TypesCompareModel CleanupTypesCompareModel(TypesCompareModel typesCompareModel) =>
+            new TypesCompareModel(
+                    typesCompareModel.TypeName,
+                    typesCompareModel.MethodsAdded,
+                    typesCompareModel.MethodsRemoved,
+                    typesCompareModel.MethodsCompareResult
+                        .Where(result => result.MethodBodyStatus != MethodBodyStatus.Same));
+        
+        private static TypesCompareModel CompareTypes(TypeDef typeDef462, TypeDef typeDef48)
         {
             Console.WriteLine("~~~~ " + typeDef48.FullName);
 
@@ -138,45 +164,48 @@ namespace Helix.Compare
             var methods48 = typeDef48.Methods.Select(method => method.FullName).ToList();
 
             var methodsAdded = methods48.Except(methods462).ToList();
-            PrintList("Добавленные методы", methodsAdded);
+            // PrintList("Добавленные методы", methodsAdded);
             //methodsAdded.ForEach(methodName => PrintIL(typeDef48.FindMethod(methodName)));
 
             var methodsRemoved = methods462.Except(methods48).ToList();
-            PrintList("Удалённые методы", methodsRemoved);
+            // PrintList("Удалённые методы", methodsRemoved);
 
-            // var methodsInBoth = methods462.Intersect(methods48).ToList();
-            //methodsInBoth.ForEach(
-            //    delegate (string methodName)
-            //    {
-            //        var methodDef48 = typeDef48.Methods.Single(method => method.FullName == methodName);
-            //        if (methodDef48.HasBody)
-            //        {
-            //            var body48 = methodDef48.MethodBody as CilBody;
+            var methodsInBoth = methods462.Intersect(methods48).ToList();
 
-            //            var methodDef462 = typeDef462.Methods.Single(method => method.FullName == methodName);
-            //            if (!methodDef462.HasBody)
-            //                throw new ArgumentException(methodDef462.FullName);
-            //            var body462 = methodDef462.MethodBody as CilBody;
-
-            //            //if (!(methodDef.MethodBody is CilBody body) || !body.Instructions.Any())
-            //            //    return;
-            //            //CompareILs(
-            //        }
-            //    });
+            return new TypesCompareModel(typeDef48.FullName, methodsAdded, methodsRemoved,
+                methodsInBoth.Select(
+                    methodName => CompareMethods(
+                        typeDef462.Methods.Single(method => method.FullName == methodName),
+                        typeDef48.Methods.Single(method => method.FullName == methodName))));
         }
 
+        private static MethodsCompareModel CompareMethods(MethodDef methodDef462, MethodDef methodDef48)
+        {
+            var methodBodyStatus =
+                methodDef462.HasBody && !methodDef48.HasBody
+                    ? MethodBodyStatus.Removed
+                    : !methodDef462.HasBody && methodDef48.HasBody
+                        ? MethodBodyStatus.Added
+                        : MethodBodyStatus.Same;
 
-        // private static void PrintIL(MethodDef methodDef)
-        // {
-        //     Console.WriteLine("++++ " + methodDef.FullName);
-        //
-        //     if (!(methodDef.MethodBody is CilBody body) || !body.Instructions.Any())
-        //         return;
-        //
-        //     foreach (var instruction in body.Instructions)
-        //         Console.WriteLine(instruction.ToString());
-        // }
-        
+            var oldMethodBody = GetMethodBodyText(methodDef462);
+            var newMethodBody = GetMethodBodyText(methodDef48);
+
+            if (oldMethodBody.Count != newMethodBody.Count
+                || oldMethodBody.Zip(newMethodBody).Any(tuple => tuple.First != tuple.Second))
+                methodBodyStatus = MethodBodyStatus.Changed;
+
+            return new MethodsCompareModel(methodDef48.FullName, methodBodyStatus, oldMethodBody, newMethodBody);
+        }
+
+        private static ImmutableList<string> GetMethodBodyText(MethodDef methodDef)
+        {
+            return
+                methodDef.MethodBody is CilBody body
+                    ? body.Instructions.Select(instruction => instruction.ToString()).ToImmutableList()
+                    : ImmutableList<string>.Empty;
+        }
+
         private static (string oldFxFolder, string newFxFolder) ParseCommandLine(IEnumerable<string> args)
         {
             string oldFxFolder = null, newFxFolder = null;
