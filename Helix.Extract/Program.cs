@@ -10,18 +10,12 @@ namespace Helix.Extract
     {
         private static void Main(string[] args)
         {
-            Console.Out.WriteLine($"Environment.CurrentDirectory = {Environment.CurrentDirectory}");
-            // args = new string[0];
-            
             var (sourceFolder, targetFolder) = ParseCommandLine(args);
             if (string.IsNullOrEmpty(sourceFolder) || string.IsNullOrEmpty(targetFolder))
             {
                 Usage();
                 return;
             }
-
-            var transform = PageTransform
-                .CompileTransform<FileListModel>("FileListTemplate.cshtml");
 
             var model = new FileListModel();
 
@@ -34,15 +28,15 @@ namespace Helix.Extract
                 var relativeFileName = Path.GetRelativePath(sourceFolder, sourceFileName);
                 Console.WriteLine("  " + relativeFileName);
                 var targetFileName = Path.Combine(targetFolder, relativeFileName);
-                Directory.CreateDirectory(Path.GetDirectoryName(targetFileName));
-                File.Copy(sourceFileName, targetFileName);
+                // Directory.CreateDirectory(Path.GetDirectoryName(targetFileName));
+                // File.Copy(sourceFileName, targetFileName);
 
                 model.AddFile(targetFileName, relativeFileName);
             }
 
             Console.WriteLine("Файлы скопированы");
 
-            File.WriteAllText("FileListReport.html", transform(model));
+            File.WriteAllText("FileListReport.html", new FileListTemplate(model).TransformText());
 
             Console.WriteLine("Отчёт создан");
         }
