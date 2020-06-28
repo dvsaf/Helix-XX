@@ -28,8 +28,8 @@ namespace Helix.Extract
                 var relativeFileName = Path.GetRelativePath(sourceFolder, sourceFileName);
                 Console.WriteLine("  " + relativeFileName);
                 var targetFileName = Path.Combine(targetFolder, relativeFileName);
-                // Directory.CreateDirectory(Path.GetDirectoryName(targetFileName));
-                // File.Copy(sourceFileName, targetFileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(targetFileName));
+                File.Copy(sourceFileName, targetFileName);
 
                 model.AddFile(targetFileName, relativeFileName);
             }

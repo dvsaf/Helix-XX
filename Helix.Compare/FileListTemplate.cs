@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace Helix.Extract
+namespace Helix.Compare
 {
     using System;
     
@@ -13,7 +13,7 @@ namespace Helix.Extract
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
+    #line 1 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
     public partial class FileListTemplate : FileListTemplateBase
     {
@@ -24,50 +24,36 @@ namespace Helix.Extract
         public virtual string TransformText()
         {
             
-            this.Write("\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head lang='ru'>\r\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\r\n  <title>Исполнимые файлы среды Microsoft .NET 4.8</title>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\r\n  <link rel='stylesheet' href='bootstrap.css'>\r\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\r\n  <script src='jquery-3.5.1.js'></script>\r\n  <script src='bootstrap.js'></script>\r\n  <script>\r\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\r\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\r\n      $(this).find(\"span\").toggle();\r\n    });\r\n\r\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\r\n      $(\".spoiler-block\").slideToggle(300);\r\n      $(this).find(\"span\").toggle()\r\n    });\r\n  </script>\r\n</head>\r\n\r\n<body>\r\n<div class='container'>\r\n  <div class='row'>\r\n    <div class='col-md-2 col-md-offset-10'>\r\n      <label class='switch'>\r\n        <input type='checkbox' id='darkSwitch'>\r\n        <span class='slider round'></span>\r\n      </label>\r\n      <label for='darkSwitch'>Ночной режим</label>\r\n    </div>\r\n    <script src='dark-mode-switch.js'></script>\r\n  </div>\r\n  <div class='row'>\r\n    <h1>Исполнимые файлы среды Microsoft .NET 4.8</h1>\r\n  </div>\r\n  <div class='row'>\r\n    <div class='spoiler-trigger-all-div'>\r\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\r\n        <span style='display: none;'>Свернуть всё</span>\r\n        <span>Развернуть всё</span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n  <div class='row'>\r\n    <table title='Исполнимые файлы среды Microsoft .NET 4.8' class='table table-hover'>\r\n      <thead>\r\n      <tr>\r\n        <th width='80%'>Имя файла</th>\r\n        <th width='10%' class='text-right'>Размер</th>\r\n        <th width='10%' class='text-right'>Контрольная сумма</th>\r\n      </tr>\r\n      </thead>\r\n      <tbody>\r\n      ");
-            #line 60 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
- foreach (var folder in _model.AsTree())
+            this.Write("\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head lang='ru'>\r\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\r\n  <title>@Model.Title</title>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\r\n  <link rel='stylesheet' href='bootstrap.css'>\r\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\r\n  <script src='jquery-3.5.1.js'></script>\r\n  <script src='bootstrap.js'></script>\r\n  <script>\r\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\r\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\r\n      $(this).find(\"span\").toggle();\r\n    });\r\n\r\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\r\n      $(\".spoiler-block\").slideToggle(300);\r\n      $(this).find(\"span\").toggle()\r\n    });\r\n  </script>\r\n</head>\r\n\r\n<body>\r\n<div class='container'>\r\n  <div class='row'>\r\n    <div class='col-md-2 col-md-offset-10'>\r\n      <label class='switch'>\r\n        <input type='checkbox' id='darkSwitch'>\r\n        <span class='slider round'></span>\r\n      </label>\r\n      <label for='darkSwitch'>Ночной режим</label>\r\n    </div>\r\n    <script src='dark-mode-switch.js'></script>\r\n  </div>\r\n  <div class='row'>\r\n    <h1>@Model.Title</h1>\r\n  </div>\r\n  <div class='row'>\r\n    <div class='spoiler-trigger-all-div'>\r\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\r\n        <span style='display: none;'>Свернуть всё</span>\r\n        <span>Развернуть всё</span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n  <div class='row'>\r\n    <table title='@Model.Title' class='table table-hover'>\r\n      <thead>\r\n      <tr>\r\n        <th width='100%'>Имя файла</th>\r\n      </tr>\r\n      </thead>\r\n      <tbody>\r\n      ");
+            #line 58 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+ foreach (var folder in _model.FileTree)
       { 
             
             #line default
             #line hidden
-            this.Write("        <tr>\r\n          <td colspan='3'>\r\n            <span class='folder-name'>Папка ");
+            this.Write("        <tr>\r\n          <td>\r\n            <span class='folder-name'>Папка ");
             
-            #line 64 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
+            #line 62 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(folder.Key));
             
             #line default
             #line hidden
             this.Write("</span>\r\n            <a href='javascript:void(0);' class='spoiler-trigger'>\r\n              <span>…</span>\r\n              <span style='display: none;'>…</span>\r\n            </a>\r\n          </td>\r\n        </tr>\r\n        ");
-            #line 71 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
+            #line 69 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
  foreach (var fileRow in folder)
         { 
             
             #line default
             #line hidden
-            this.Write("          <tr class='spoiler-block' style='display: none'>\r\n            <td width='80%'>\r\n              <span class='file-name'>");
+            this.Write("          <tr class='spoiler-block' style='display: none;'>\r\n            <td width='100%'>\r\n              <span class='file-name'>");
             
-            #line 75 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(fileRow.Name));
-            
-            #line default
-            #line hidden
-            this.Write("</span>\r\n            </td>\r\n            <td width='10%' class='number text-right'>");
-            
-            #line 77 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(fileRow.Length));
+            #line 73 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fileRow));
             
             #line default
             #line hidden
-            this.Write("</td>\r\n            <td width='10%' class='hex-number text-right'>");
-            
-            #line 78 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(fileRow.Checksum.ToString("X8")));
-            
-            #line default
-            #line hidden
-            this.Write("</td>\r\n          </tr>\r\n        ");
-            #line 80 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
+            this.Write("></span>\r\n            </td>\r\n          </tr>\r\n        ");
+            #line 76 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
  }
       } 
             

@@ -1,12 +1,11 @@
-﻿@using Helix.Compare
-@model Helix.Compare.FilesCompareModel
+﻿<#@ template language="C#" #>
 
 <!DOCTYPE html>
 <html>
 
 <head lang='ru'>
   <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-  <title>@Model.FileName</title>
+  <title><#= _model.FileName #></title>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
   <link rel='stylesheet' href='bootstrap.css'>
   <link rel='stylesheet' type='text/css' href='stylesheet.css'>
@@ -38,7 +37,7 @@
     <script src='dark-mode-switch.js'></script>
   </div>
   <div class='row'>
-    <h1>@Model.FileName</h1>
+    <h1><#= _model.FileName #></h1>
   </div>
   <div class='row'>
     <div class='spoiler-trigger-all-div'>
@@ -55,10 +54,10 @@
         <tr><th width='100%'>Имя типа</th></tr>
       </thead>
       <tbody>
-      @foreach (var typeName in Model.TypesAdded)
-      {
-        <tr><td><span class='folder-name'>@typeName</span></td></tr>
-      }
+      <# foreach (var typeName in _model.TypesAdded)
+      { #>
+        <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
+      <# } #>
       </tbody>
     </table>
   </div>
@@ -70,10 +69,10 @@
         <tr><th width='100%'>Имя типа</th></tr>
       </thead>
       <tbody>
-      @foreach (var typeName in Model.TypesRemoved)
-      {
-        <tr><td><span class='folder-name'>@typeName</span></td></tr>
-      }
+      <# foreach (var typeName in _model.TypesRemoved)
+      { #>
+        <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
+      <# } #>
       </tbody>
     </table>
   </div>
@@ -88,43 +87,43 @@
       </tr>
       </thead>
       <tbody>
-      @foreach (var typeCompareResult in Model.TypesCompareResult)
-      {
-        <tr><td colspan='2'><span class='folder-name' style='color: #204d74'>@typeCompareResult.TypeName</span></td></tr>
+      <# foreach (var typeCompareResult in _model.TypesCompareResult)
+      { #>
+        <tr><td colspan='2'><span class='folder-name' style='color: #204d74'><#= typeCompareResult.TypeName #></span></td></tr>
         <tr><td colspan='2'>Добавленные методы</td></tr>
-        @foreach (var methodName in typeCompareResult.MethodsAdded)
-        {
-          <tr><td colspan='2'><span class='folder-name'>@methodName</span></td></tr>
-        }
+        <# foreach (var methodName in typeCompareResult.MethodsAdded)
+        { #>
+          <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
+        <# } #>
         <tr><td colspan='2'>Удалённые методы</td></tr>
-        @foreach (var methodName in typeCompareResult.MethodsRemoved)
-        {
-          <tr><td colspan='2'><span class='folder-name'>@methodName</span></td></tr>
-        }
+        <# foreach (var methodName in typeCompareResult.MethodsRemoved)
+        { #>
+          <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
+        <# } #>
         <tr><td colspan='2'>Методы в обоих типах</td></tr>
-        @foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
-        {
-          <tr><td colspan='2'><span class='folder-name'>@methodsCompareResult.MethodName</span></td></tr>
-          <tr><td colspan='2'><span class='folder-name'>@methodsCompareResult.MethodBodyStatus</span></td></tr>
-          @if (methodsCompareResult.MethodBodyStatus != MethodBodyStatus.Same)
-          {
+        <# foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
+        { #>
+          <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodName #></span></td></tr>
+          <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodBodyStatus#></span></td></tr>
+          <# if (methodsCompareResult.MethodBodyStatus != MethodBodyStatus.Same)
+          { #>
             <tr>
               <td>
-                @foreach (var line in methodsCompareResult.OldMethodBody)
-                {
-                  @line<br/>
-                }
+                <# foreach (var line in methodsCompareResult.OldMethodBody)
+                { #>
+                  <#= line #><br/>
+                <# } #>
               </td>
               <td>
-                @foreach (var line in methodsCompareResult.NewMethodBody)
-                {
-                  @line<br/>
-                }
+                <# foreach (var line in methodsCompareResult.NewMethodBody)
+                { #>
+                  <#= line #><br/>
+                <# } #>
               </td>
             </tr>
-          }
+          <# }
         }
-      }
+      } #>
       </tbody>
     </table>
   </div>

@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Update="Properties\launchSettings.json">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
+        <ProjectReference Include="..\Helix.Commons\Helix.Commons.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Helix.Commons\Helix.Commons.csproj" />
+        <Content Update="Properties\launchSettings.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

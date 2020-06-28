@@ -14,15 +14,6 @@ namespace Helix.Compare
         private static string _root462;
         private static string _root48;
 
-        private static readonly Func<FileListModel, string> FileListModelTransform = PageTransform
-            .CompileTransform<FileListModel>("FileListTemplate.cshtml");
-
-        private static readonly Func<FilesCompareModel, string> FilesCompareModelTransform = PageTransform
-            .CompileTransform<FilesCompareModel>("CompareTemplate.cshtml");
-
-        private static readonly Func<FilesCompareModel, string> FilesCompareModelVerboseTransform = PageTransform
-            .CompileTransform<FilesCompareModel>("VerboseCompareTemplate.cshtml");
-
         private static void Main(string[] args)
         {
             (_root462, _root48) = ParseCommandLine(args);
@@ -82,7 +73,7 @@ namespace Helix.Compare
                     .ToImmutableList();
             File.WriteAllText(
                 "ClrFilesChanged.html",
-                FileListModelTransform(new FileListModel("Изменившиеся сборки", clrFilesChanged)));
+                new FileListTemplate(new FileListModel("Изменившиеся сборки", clrFilesChanged)).TransformText());
 
             Console.WriteLine("Отчёты по файлам сформированы");
 
@@ -129,10 +120,10 @@ namespace Helix.Compare
                         file48.Find(typeName, false))));
             File.WriteAllText(
                 $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — Compare.html",
-                FilesCompareModelTransform(CleanupFilesCompareModel(filesCompareModel)));
+                new CompareTemplate(CleanupFilesCompareModel(filesCompareModel)).TransformText());
             File.WriteAllText(
                 $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — VerboseCompare.html",
-                FilesCompareModelVerboseTransform(filesCompareModel));
+                new VerboseCompareTemplate(filesCompareModel).TransformText());
         }
 
         private static FilesCompareModel CleanupFilesCompareModel(FilesCompareModel filesCompareModel) =>
