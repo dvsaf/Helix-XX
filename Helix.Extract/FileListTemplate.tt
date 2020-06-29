@@ -86,3 +86,12 @@
 </body>
 
 </html>
+
+<#+
+    private readonly FileListModel _model;
+
+    public FileListTemplate(FileListModel model)
+    {
+        _model = model;
+    }
+#>

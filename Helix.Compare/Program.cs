@@ -41,28 +41,28 @@ namespace Helix.Compare
             // var filesAdded = files48.Except(files462).ToImmutableList();
             // File.WriteAllText(
             //     "FilesAdded.html",
-            //     FileListModelTransform(new FileListModel("Добавленные файлы", filesAdded)));
+            //     new FileListTemplate(new FileListModel("Добавленные файлы", filesAdded)).TransformText());
             // File.WriteAllLines("NativeFilesAdded.list",
             //     filesAdded.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
             // File.WriteAllLines("ClrFilesAdded.list",
             //     filesAdded.Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName))));
-
+            //
             // var filesRemoved = files462.Except(files48).ToImmutableList();
             // File.WriteAllText(
             //     "FilesRemoved.html",
-            //     FileListModelTransform(new FileListModel("Удалённые файлы", filesRemoved)));
+            //     new FileListTemplate(new FileListModel("Удалённые файлы", filesRemoved)).TransformText());
 
             var filesInBoth = files462.Intersect(files48).ToImmutableList();
 
             var filesEqual = filesInBoth.Where(AreFilesEqual).ToImmutableList();
             // File.WriteAllText(
             //     "FilesEqual.html",
-            //     FileListModelTransform(new FileListModel("Не изменившиеся файлы", filesEqual)));
+            //     new FileListTemplate(new FileListModel("Не изменившиеся файлы", filesEqual)).TransformText());
 
             var filesChanged = filesInBoth.Except(filesEqual).ToImmutableList();
             // File.WriteAllText(
             //     "FilesChanged.html",
-            //     FileListModelTransform(new FileListModel("Изменившиеся файлы", filesChanged)));
+            //     new FileListTemplate(new FileListModel("Изменившиеся файлы", filesChanged)).TransformText());
 
             // File.WriteAllLines("NativeFilesChanged.list",
             //     filesChanged.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));

@@ -131,3 +131,12 @@
 </body>
 
 </html>
+
+<#+
+    private readonly FilesCompareModel _model;
+
+    public VerboseCompareTemplate(FilesCompareModel model)
+    {
+        _model = model;
+    }
+#>

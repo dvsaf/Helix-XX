@@ -21,6 +21,18 @@ using System.Linq;
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
     public partial class CompareTemplate : CompareTemplateBase
     {
+        #line 147 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\CompareTemplate.tt"
+ 
+    private readonly FilesCompareModel _model;
+
+    public VerboseCompareTemplate(FilesCompareModel model)
+    {
+        _model = model;
+    }
+
+        
+        #line default
+        #line hidden
 #line hidden
         /// <summary>
         /// Create the template output
@@ -239,7 +251,7 @@ using System.Linq;
             
             #line default
             #line hidden
-            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>");
+            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -13,8 +13,6 @@ namespace Helix.Compare
         public FilesCompareModel(string fileName, IEnumerable<string> typesAdded, IEnumerable<string> typesRemoved,
             IEnumerable<TypesCompareModel> typesCompareResult)
         {
-            IReadOnlyCollection<string> d;
-            
             FileName = fileName;
             TypesAdded = typesAdded;
             TypesRemoved = typesRemoved;

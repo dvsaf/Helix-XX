@@ -17,6 +17,18 @@ namespace Helix.Compare
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
     public partial class VerboseCompareTemplate : VerboseCompareTemplateBase
     {
+        #line 135 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\VerboseCompareTemplate.tt"
+
+    private readonly FilesCompareModel _model;
+
+    public VerboseCompareTemplate(FilesCompareModel model)
+    {
+        _model = model;
+    }
+
+        
+        #line default
+        #line hidden
 #line hidden
         /// <summary>
         /// Create the template output
@@ -208,7 +220,7 @@ namespace Helix.Compare
             
             #line default
             #line hidden
-            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>");
+            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

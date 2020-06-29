@@ -17,6 +17,18 @@ namespace Helix.Extract
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
     public partial class FileListTemplate : FileListTemplateBase
     {
+        #line 90 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Extract\FileListTemplate.tt"
+
+    private readonly FileListModel _model;
+
+    public FileListTemplate(FileListModel model)
+    {
+        _model = model;
+    }
+
+        
+        #line default
+        #line hidden
 #line hidden
         /// <summary>
         /// Create the template output
@@ -73,7 +85,7 @@ namespace Helix.Extract
             
             #line default
             #line hidden
-            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>");
+            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
