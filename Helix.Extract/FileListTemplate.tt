@@ -57,8 +57,10 @@
       </tr>
       </thead>
       <tbody>
-      <# foreach (var folder in _model.AsTree())
-      { #>
+      <#
+    foreach (var folder in _model.AsTree())
+    {
+#>
         <tr>
           <td colspan='3'>
             <span class='folder-name'>Папка <#= folder.Key #></span>
@@ -68,8 +70,10 @@
             </a>
           </td>
         </tr>
-        <# foreach (var fileRow in folder)
-        { #>
+        <#
+    foreach (var fileRow in folder)
+    {
+#>
           <tr class='spoiler-block' style='display: none'>
             <td width='80%'>
               <span class='file-name'><#= fileRow.Name #></span>
@@ -77,8 +81,9 @@
             <td width='10%' class='number text-right'><#= fileRow.Length #></td>
             <td width='10%' class='hex-number text-right'><#= fileRow.Checksum.ToString("X8") #></td>
           </tr>
-        <# }
-      } #>
+        <#
+    }
+    } #>
       </tbody>
     </table>
   </div>

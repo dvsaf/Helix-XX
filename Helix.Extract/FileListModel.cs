@@ -30,10 +30,12 @@ namespace Helix.Extract
         }
 
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        public IEnumerable<IGrouping<string, FileListRow>> AsTree() =>
-            _list
+        public IEnumerable<IGrouping<string, FileListRow>> AsTree()
+        {
+            return _list
                 .OrderBy(fileRow => fileRow.Name)
                 .ToLookup(fileRow => Path.GetDirectoryName(fileRow.Name))
                 .OrderBy(grouping => grouping.Key);
+        }
     }
 }

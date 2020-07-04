@@ -54,10 +54,13 @@
         <tr><th width='100%'>Имя типа</th></tr>
       </thead>
       <tbody>
-      <# foreach (var typeName in _model.TypesAdded)
-      { #>
+      <#
+    foreach (var typeName in _model.TypesAdded)
+    {
+#>
         <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
-      <# } #>
+      <#
+    } #>
       </tbody>
     </table>
   </div>
@@ -69,10 +72,13 @@
         <tr><th width='100%'>Имя типа</th></tr>
       </thead>
       <tbody>
-      <# foreach (var typeName in _model.TypesRemoved)
-      { #>
+      <#
+    foreach (var typeName in _model.TypesRemoved)
+    {
+#>
         <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
-      <# } #>
+      <#
+    } #>
       </tbody>
     </table>
   </div>
@@ -87,43 +93,62 @@
       </tr>
       </thead>
       <tbody>
-      <# foreach (var typeCompareResult in _model.TypesCompareResult)
-      { #>
+      <#
+    foreach (var typeCompareResult in _model.TypesCompareResult)
+    {
+#>
         <tr><td colspan='2'><span class='folder-name' style='color: #204d74'><#= typeCompareResult.TypeName #></span></td></tr>
         <tr><td colspan='2'>Добавленные методы</td></tr>
-        <# foreach (var methodName in typeCompareResult.MethodsAdded)
-        { #>
+        <#
+    foreach (var methodName in typeCompareResult.MethodsAdded)
+    {
+#>
           <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
-        <# } #>
+        <#
+    } #>
         <tr><td colspan='2'>Удалённые методы</td></tr>
-        <# foreach (var methodName in typeCompareResult.MethodsRemoved)
-        { #>
+        <#
+    foreach (var methodName in typeCompareResult.MethodsRemoved)
+    {
+#>
           <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
-        <# } #>
+        <#
+    } #>
         <tr><td colspan='2'>Методы в обоих типах</td></tr>
-        <# foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
-        { #>
+        <#
+    foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
+    {
+#>
           <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodName #></span></td></tr>
-          <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodBodyStatus#></span></td></tr>
-          <# if (methodsCompareResult.MethodBodyStatus != MethodBodyStatus.Same)
-          { #>
+          <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodBodyStatus #></span></td></tr>
+          <#
+    if (methodsCompareResult.MethodBodyStatus != MethodBodyStatus.Same)
+    {
+#>
             <tr>
               <td>
-                <# foreach (var line in methodsCompareResult.OldMethodBody)
-                { #>
+                <#
+    foreach (var line in methodsCompareResult.OldMethodBody)
+    {
+#>
                   <#= line #><br/>
-                <# } #>
+                <#
+    } #>
               </td>
               <td>
-                <# foreach (var line in methodsCompareResult.NewMethodBody)
-                { #>
+                <#
+    foreach (var line in methodsCompareResult.NewMethodBody)
+    {
+#>
                   <#= line #><br/>
-                <# } #>
+                <#
+    } #>
               </td>
             </tr>
-          <# }
-        }
-      } #>
+          <#
+    }
+    }
+    } #>
       </tbody>
     </table>
   </div>

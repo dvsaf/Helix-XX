@@ -44,6 +44,11 @@
         <DesignTime>True</DesignTime>
         <DependentUpon>VerboseCompareTemplate.tt</DependentUpon>
       </Compile>
+      <Compile Update="ChangesToStudyTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>ChangesToStudyTemplate.tt</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -58,6 +63,10 @@
       <None Update="VerboseCompareTemplate.tt">
         <Generator>TextTemplatingFilePreprocessor</Generator>
         <LastGenOutput>VerboseCompareTemplate.cs</LastGenOutput>
+      </None>
+      <None Update="ChangesToStudyTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ChangesToStudyTemplate.cs</LastGenOutput>
       </None>
     </ItemGroup>
 

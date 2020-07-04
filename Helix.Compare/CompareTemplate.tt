@@ -48,8 +48,10 @@
       </a>
     </div>
   </div>
-  <# if (_model.TypesAdded.Any())
-  { #>
+  <#
+    if (_model.TypesAdded.Any())
+    {
+#>
     <div class='row'>
       <h2>Добавленные типы</h2>
       <table title='Добавленные типы' class='table table-hover'>
@@ -57,16 +59,21 @@
         <tr><th width='100%'>Имя типа</th></tr>
         </thead>
         <tbody>
-        <# foreach (var typeName in _model.TypesAdded)
-        { #>
+        <#
+    foreach (var typeName in _model.TypesAdded)
+    {
+#>
           <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
-        <# } #>
+        <#
+    } #>
         </tbody>
       </table>
     </div>
-  <# }
-  if (_model.TypesRemoved.Any())
-  { #>
+  <#
+    }
+    if (_model.TypesRemoved.Any())
+    {
+#>
     <div class='row'>
       <h2>Удалённые типы</h2>
       <table title='Удалённые типы' class='table table-hover'>
@@ -74,14 +81,18 @@
         <tr><th width='100%'>Имя типа</th></tr>
         </thead>
         <tbody>
-        <# foreach (var typeName in _model.TypesRemoved)
-        { #>
+        <#
+    foreach (var typeName in _model.TypesRemoved)
+    {
+#>
           <tr><td><span class='folder-name'><#= typeName #></span></td></tr>
-        <# } #>
+        <#
+    } #>
         </tbody>
       </table>
     </div>
-  <# } #>
+  <#
+    } #>
 
   <div class='row'>
     <h2>Типы в обоих файлах</h2>
@@ -93,49 +104,70 @@
       </tr>
       </thead>
       <tbody>
-      <# foreach (var typeCompareResult in _model.TypesCompareResult)
-      { #>
+      <#
+    foreach (var typeCompareResult in _model.TypesCompareResult)
+    {
+#>
         <tr><td colspan='2'><span class='folder-name' style='color: #204d74'><#= typeCompareResult.TypeName #></span></td></tr> 
-        <# if (typeCompareResult.MethodsAdded.Any())
-        { #>
+        <#
+    if (typeCompareResult.MethodsAdded.Any())
+    {
+#>
           <tr><td colspan='2'>Добавленные методы</td></tr>
-          <# foreach (var methodName in typeCompareResult.MethodsAdded)
-          { #>
+          <#
+    foreach (var methodName in typeCompareResult.MethodsAdded)
+    {
+#>
             <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
-          <# }
-        }
-        if (typeCompareResult.MethodsRemoved.Any())
-        { #>
+          <#
+    }
+    }
+    if (typeCompareResult.MethodsRemoved.Any())
+    {
+#>
           <tr><td colspan='2'>Удалённые методы</td></tr>
-          <# foreach (var methodName in typeCompareResult.MethodsRemoved)
-          { #>
+          <#
+    foreach (var methodName in typeCompareResult.MethodsRemoved)
+    {
+#>
             <tr><td colspan='2'><span class='folder-name'><#= methodName #></span></td></tr>
-          <# }
-        }
-        if (typeCompareResult.MethodsCompareResult.Any())
-        { #>
+          <#
+    }
+    }
+    if (typeCompareResult.MethodsCompareResult.Any())
+    {
+#>
           <tr><td colspan='2'>Методы в обоих типах</td></tr>
-          <# foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
-          { #>
+          <#
+        foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
+        {
+#>
             <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodName #></span></td></tr>
             <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodBodyStatus #></span></td></tr>
             <tr>
               <td>
-                <# foreach (var line in methodsCompareResult.OldMethodBody)
-                { #>
+                <#
+            foreach (var line in methodsCompareResult.OldMethodBody)
+            {
+#>
                   <#= line #><br/>
-                <# } #>
+                <#
+            } #>
               </td>
               <td>
-                <# foreach (var line in methodsCompareResult.NewMethodBody)
-                { #>
+                <#
+            foreach (var line in methodsCompareResult.NewMethodBody)
+            {
+#>
                   <#= line #><br/>
-                <# } #>
+                <#
+            } #>
               </td>
             </tr>
-          <# }
+          <#
         }
-      } #>
+    }
+    } #>
       </tbody>
     </table>
   </div>
@@ -144,7 +176,7 @@
 
 </html>
 
-<#+ 
+<#+
     private readonly FilesCompareModel _model;
 
     public CompareTemplate(FilesCompareModel model)

@@ -1,0 +1,29 @@
+<#@ template language="C#" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#
+    foreach (var fileChangesToStudy in _model)
+    {
+        foreach (var typeToStudy in fileChangesToStudy.TypesToStudy)
+        {
+#>
+file=<#= fileChangesToStudy.FileName #>,type=<#= typeToStudy #>
+<#
+        }
+        foreach (var methodToStudy in fileChangesToStudy.MethodsToStudy)
+        {
+#>
+file=<#= fileChangesToStudy.FileName #>,method=<#= methodToStudy #>
+<#
+        }
+    }
+#>
+
+<#+
+    private readonly IEnumerable<ChangesToStudyModel> _model;
+
+    public ChangesToStudyTemplate(IEnumerable<ChangesToStudyModel> model)
+    {
+        _model = model;
+    }
+#>

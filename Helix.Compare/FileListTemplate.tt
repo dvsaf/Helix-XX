@@ -55,8 +55,10 @@
       </tr>
       </thead>
       <tbody>
-      <# foreach (var folder in _model.FileTree)
-      { #>
+      <#
+    foreach (var folder in _model.FileTree)
+    {
+#>
         <tr>
           <td>
             <span class='folder-name'>Папка <#= folder.Key #></span>
@@ -66,15 +68,18 @@
             </a>
           </td>
         </tr>
-        <# foreach (var fileRow in folder)
-        { #>
+        <#
+    foreach (var fileRow in folder)
+    {
+#>
           <tr class='spoiler-block' style='display: none;'>
             <td width='100%'>
               <span class='file-name'><#= fileRow #>></span>
             </td>
           </tr>
-        <# }
-      } #>
+        <#
+    }
+    } #>
       </tbody>
     </table>
   </div>

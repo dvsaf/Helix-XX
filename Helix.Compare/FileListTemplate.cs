@@ -13,11 +13,11 @@ namespace Helix.Compare
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+    #line 1 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
     public partial class FileListTemplate : FileListTemplateBase
     {
-        #line 86 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+        #line 91 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
 
     private readonly FileListModel _model;
 
@@ -36,42 +36,47 @@ namespace Helix.Compare
         public virtual string TransformText()
         {
             
-            this.Write("\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head lang='ru'>\r\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\r\n  <title>@Model.Title</title>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\r\n  <link rel='stylesheet' href='bootstrap.css'>\r\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\r\n  <script src='jquery-3.5.1.js'></script>\r\n  <script src='bootstrap.js'></script>\r\n  <script>\r\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\r\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\r\n      $(this).find(\"span\").toggle();\r\n    });\r\n\r\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\r\n      $(\".spoiler-block\").slideToggle(300);\r\n      $(this).find(\"span\").toggle()\r\n    });\r\n  </script>\r\n</head>\r\n\r\n<body>\r\n<div class='container'>\r\n  <div class='row'>\r\n    <div class='col-md-2 col-md-offset-10'>\r\n      <label class='switch'>\r\n        <input type='checkbox' id='darkSwitch'>\r\n        <span class='slider round'></span>\r\n      </label>\r\n      <label for='darkSwitch'>Ночной режим</label>\r\n    </div>\r\n    <script src='dark-mode-switch.js'></script>\r\n  </div>\r\n  <div class='row'>\r\n    <h1>@Model.Title</h1>\r\n  </div>\r\n  <div class='row'>\r\n    <div class='spoiler-trigger-all-div'>\r\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\r\n        <span style='display: none;'>Свернуть всё</span>\r\n        <span>Развернуть всё</span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n  <div class='row'>\r\n    <table title='@Model.Title' class='table table-hover'>\r\n      <thead>\r\n      <tr>\r\n        <th width='100%'>Имя файла</th>\r\n      </tr>\r\n      </thead>\r\n      <tbody>\r\n      ");
-            #line 58 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
- foreach (var folder in _model.FileTree)
-      { 
+            this.Write("\n<!DOCTYPE html>\n<html>\n\n<head lang='ru'>\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n  <title>@Model.Title</title>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\n  <link rel='stylesheet' href='bootstrap.css'>\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\n  <script src='jquery-3.5.1.js'></script>\n  <script src='bootstrap.js'></script>\n  <script>\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\n      $(this).find(\"span\").toggle();\n    });\n\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\n      $(\".spoiler-block\").slideToggle(300);\n      $(this).find(\"span\").toggle()\n    });\n  </script>\n</head>\n\n<body>\n<div class='container'>\n  <div class='row'>\n    <div class='col-md-2 col-md-offset-10'>\n      <label class='switch'>\n        <input type='checkbox' id='darkSwitch'>\n        <span class='slider round'></span>\n      </label>\n      <label for='darkSwitch'>Ночной режим</label>\n    </div>\n    <script src='dark-mode-switch.js'></script>\n  </div>\n  <div class='row'>\n    <h1>@Model.Title</h1>\n  </div>\n  <div class='row'>\n    <div class='spoiler-trigger-all-div'>\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\n        <span style='display: none;'>Свернуть всё</span>\n        <span>Развернуть всё</span>\n      </a>\n    </div>\n  </div>\n  <div class='row'>\n    <table title='@Model.Title' class='table table-hover'>\n      <thead>\n      <tr>\n        <th width='100%'>Имя файла</th>\n      </tr>\n      </thead>\n      <tbody>\n      ");
+            #line 58 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+
+    foreach (var folder in _model.FileTree)
+    {
+
             
             #line default
             #line hidden
-            this.Write("        <tr>\r\n          <td>\r\n            <span class='folder-name'>Папка ");
+            this.Write("        <tr>\n          <td>\n            <span class='folder-name'>Папка ");
             
-            #line 62 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+            #line 64 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(folder.Key));
             
             #line default
             #line hidden
-            this.Write("</span>\r\n            <a href='javascript:void(0);' class='spoiler-trigger'>\r\n              <span>…</span>\r\n              <span style='display: none;'>…</span>\r\n            </a>\r\n          </td>\r\n        </tr>\r\n        ");
-            #line 69 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
- foreach (var fileRow in folder)
-        { 
+            this.Write("</span>\n            <a href='javascript:void(0);' class='spoiler-trigger'>\n              <span>…</span>\n              <span style='display: none;'>…</span>\n            </a>\n          </td>\n        </tr>\n        ");
+            #line 71 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+
+    foreach (var fileRow in folder)
+    {
+
             
             #line default
             #line hidden
-            this.Write("          <tr class='spoiler-block' style='display: none;'>\r\n            <td width='100%'>\r\n              <span class='file-name'>");
+            this.Write("          <tr class='spoiler-block' style='display: none;'>\n            <td width='100%'>\n              <span class='file-name'>");
             
-            #line 73 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
+            #line 77 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(fileRow));
             
             #line default
             #line hidden
-            this.Write("></span>\r\n            </td>\r\n          </tr>\r\n        ");
-            #line 76 "C:\Users\dvsaf\Projects\Helix-XX\Helix.Compare\FileListTemplate.tt"
- }
-      } 
+            this.Write("></span>\n            </td>\n          </tr>\n        ");
+            #line 80 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+
+    }
+    } 
             
             #line default
             #line hidden
-            this.Write("      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n</body>\r\n\r\n</html>\r\n\r\n");
+            this.Write("      </tbody>\n    </table>\n  </div>\n</div>\n</body>\n\n</html>\n\n");
             return this.GenerationEnvironment.ToString();
         }
     }

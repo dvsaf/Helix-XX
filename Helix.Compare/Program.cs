@@ -24,7 +24,10 @@ namespace Helix.Compare
             }
 
             var clrFilesChanged = CompareFiles();
-            clrFilesChanged.Take(1).ToImmutableList().ForEach(CompareTypes);
+            var changesToStudy = clrFilesChanged.ToImmutableList().Select(CompareTypes);
+            File.WriteAllText(
+                "ChangesToStudy.list",
+                new ChangesToStudyTemplate(changesToStudy).TransformText());
 
             Console.WriteLine("Сравнение завершено");
         }
@@ -38,34 +41,34 @@ namespace Helix.Compare
                 .Select(file => Path.GetRelativePath(_root48, file))
                 .ToImmutableList();
 
-            // var filesAdded = files48.Except(files462).ToImmutableList();
-            // File.WriteAllText(
-            //     "FilesAdded.html",
-            //     new FileListTemplate(new FileListModel("Добавленные файлы", filesAdded)).TransformText());
-            // File.WriteAllLines("NativeFilesAdded.list",
-            //     filesAdded.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
-            // File.WriteAllLines("ClrFilesAdded.list",
-            //     filesAdded.Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName))));
-            //
-            // var filesRemoved = files462.Except(files48).ToImmutableList();
-            // File.WriteAllText(
-            //     "FilesRemoved.html",
-            //     new FileListTemplate(new FileListModel("Удалённые файлы", filesRemoved)).TransformText());
+            var filesAdded = files48.Except(files462).ToImmutableList();
+            File.WriteAllText(
+                "FilesAdded.html",
+                new FileListTemplate(new FileListModel("Добавленные файлы", filesAdded)).TransformText());
+            File.WriteAllLines("NativeFilesAdded.list",
+                filesAdded.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+            File.WriteAllLines("ClrFilesAdded.list",
+                filesAdded.Where(fileName => PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+
+            var filesRemoved = files462.Except(files48).ToImmutableList();
+            File.WriteAllText(
+                "FilesRemoved.html",
+                new FileListTemplate(new FileListModel("Удалённые файлы", filesRemoved)).TransformText());
 
             var filesInBoth = files462.Intersect(files48).ToImmutableList();
 
             var filesEqual = filesInBoth.Where(AreFilesEqual).ToImmutableList();
-            // File.WriteAllText(
-            //     "FilesEqual.html",
-            //     new FileListTemplate(new FileListModel("Не изменившиеся файлы", filesEqual)).TransformText());
+            File.WriteAllText(
+                "FilesEqual.html",
+                new FileListTemplate(new FileListModel("Не изменившиеся файлы", filesEqual)).TransformText());
 
             var filesChanged = filesInBoth.Except(filesEqual).ToImmutableList();
-            // File.WriteAllText(
-            //     "FilesChanged.html",
-            //     new FileListTemplate(new FileListModel("Изменившиеся файлы", filesChanged)).TransformText());
+            File.WriteAllText(
+                "FilesChanged.html",
+                new FileListTemplate(new FileListModel("Изменившиеся файлы", filesChanged)).TransformText());
 
-            // File.WriteAllLines("NativeFilesChanged.list",
-            //     filesChanged.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
+            File.WriteAllLines("NativeFilesChanged.list",
+                filesChanged.Where(fileName => !PeFile.IsClrFile(Path.Combine(_root48, fileName))));
 
             var clrFilesChanged =
                 filesChanged
@@ -92,9 +95,9 @@ namespace Helix.Compare
             return !fileContent462.Where((b, i) => b != fileContent48[i]).Any();
         }
 
-        private static void CompareTypes(string fileName)
+        private static ChangesToStudyModel CompareTypes(string fileName)
         {
-            Console.WriteLine("---- " + fileName);
+            Console.WriteLine("Сравнение файлов: " + fileName);
 
             var file462 = ModuleDefMD.Load(Path.Combine(_root462, fileName));
             var file48 = ModuleDefMD.Load(Path.Combine(_root48, fileName));
@@ -120,35 +123,57 @@ namespace Helix.Compare
                         file48.Find(typeName, false))));
             File.WriteAllText(
                 $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — Compare.html",
-                new CompareTemplate(CleanupFilesCompareModel(filesCompareModel)).TransformText());
+                new CompareTemplate(BuildFilesChangesModel(filesCompareModel)).TransformText());
             File.WriteAllText(
                 $"{fileName.Replace(Path.DirectorySeparatorChar, '_')} — VerboseCompare.html",
                 new VerboseCompareTemplate(filesCompareModel).TransformText());
+
+            return BuildFilesChangesToStudyModel(filesCompareModel);
         }
 
-        private static FilesCompareModel CleanupFilesCompareModel(FilesCompareModel filesCompareModel) =>
-            new FilesCompareModel(
-                    filesCompareModel.FileName,
-                    filesCompareModel.TypesAdded,
-                    filesCompareModel.TypesRemoved,
-                    filesCompareModel.TypesCompareResult
-                        .Select(CleanupTypesCompareModel)
-                        .Where(model =>
-                            model.MethodsAdded.Any() 
-                            || model.MethodsRemoved.Any()
-                            || model.MethodsCompareResult.Any()));
+        private static ChangesToStudyModel BuildFilesChangesToStudyModel(FilesCompareModel filesCompareModel)
+        {
+            return new ChangesToStudyModel(
+                filesCompareModel.FileName,
+                filesCompareModel.TypesAdded,
+                filesCompareModel.TypesCompareResult
+                    .SelectMany(typesCompareModel =>
+                        typesCompareModel.MethodsAdded
+                            .Union(
+                                typesCompareModel.MethodsCompareResult
+                                    .Where(methodsCompareModel =>
+                                        methodsCompareModel.MethodBodyStatus == MethodBodyStatus.Added
+                                        || methodsCompareModel.MethodBodyStatus == MethodBodyStatus.Changed)
+                                    .Select(methodsCompareModel => methodsCompareModel.MethodName))));
+        }
 
-        private static TypesCompareModel CleanupTypesCompareModel(TypesCompareModel typesCompareModel) =>
-            new TypesCompareModel(
-                    typesCompareModel.TypeName,
-                    typesCompareModel.MethodsAdded,
-                    typesCompareModel.MethodsRemoved,
-                    typesCompareModel.MethodsCompareResult
-                        .Where(result => result.MethodBodyStatus != MethodBodyStatus.Same));
-        
+        private static FilesCompareModel BuildFilesChangesModel(FilesCompareModel filesCompareModel)
+        {
+            return new FilesCompareModel(
+                filesCompareModel.FileName,
+                filesCompareModel.TypesAdded,
+                filesCompareModel.TypesRemoved,
+                filesCompareModel.TypesCompareResult
+                    .Select(BuildTypesChangesModel)
+                    .Where(model =>
+                        model.MethodsAdded.Any()
+                        || model.MethodsRemoved.Any()
+                        || model.MethodsCompareResult.Any()));
+        }
+
+        private static TypesCompareModel BuildTypesChangesModel(TypesCompareModel typesCompareModel)
+        {
+            return new TypesCompareModel(
+                typesCompareModel.TypeName,
+                typesCompareModel.MethodsAdded,
+                typesCompareModel.MethodsRemoved,
+                typesCompareModel.MethodsCompareResult
+                    .Where(result => result.MethodBodyStatus != MethodBodyStatus.Same));
+        }
+
         private static TypesCompareModel CompareTypes(TypeDef typeDef462, TypeDef typeDef48)
         {
-            Console.WriteLine("~~~~ " + typeDef48.FullName);
+            // Console.WriteLine("~~~~ " + typeDef48.FullName);
 
             // TODO: constructors?
             var methods462 = typeDef462.Methods.Select(method => method.FullName).ToList();
