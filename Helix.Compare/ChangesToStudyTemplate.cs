@@ -8,8 +8,8 @@
 namespace Helix.Compare
 {
     using System;
-    #line 2 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-using System.Linq;
+    #line 2 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
+using System.Collections.Generic;
     #line default
     #line hidden
     
@@ -17,15 +17,15 @@ using System.Linq;
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
+    #line 1 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
-    public partial class CompareTemplate : CompareTemplateBase
+    public partial class ChangesToStudyTemplate : ChangesToStudyTemplateBase
     {
-        #line 179 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
+        #line 22 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
 
-    private readonly FilesCompareModel _model;
+    private readonly IEnumerable<ChangesToStudyModel> _model;
 
-    public CompareTemplate(FilesCompareModel model)
+    public ChangesToStudyTemplate(IEnumerable<ChangesToStudyModel> model)
     {
         _model = model;
     }
@@ -40,250 +40,65 @@ using System.Linq;
         public virtual string TransformText()
         {
             
-            this.Write("\n<!DOCTYPE html>\n<html>\n\n<head lang='ru'>\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n  <title>");
-            
-            #line 9 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_model.FileName));
-            
-            #line default
-            #line hidden
-            this.Write("</title>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\n  <link rel='stylesheet' href='bootstrap.css'>\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\n  <script src='jquery-3.5.1.js'></script>\n  <script src='bootstrap.js'></script>\n  <script>\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\n      $(this).find(\"span\").toggle();\n    });\n\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\n      $(\".spoiler-block\").slideToggle(300);\n      $(this).find(\"span\").toggle()\n    });\n  </script>\n</head>\n\n<body>\n<div class='container'>\n  <div class='row'>\n    <div class='col-md-2 col-md-offset-10'>\n      <label class='switch'>\n        <input type='checkbox' id='darkSwitch'>\n        <span class='slider round'></span>\n      </label>\n      <label for='darkSwitch'>Ночной режим</label>\n    </div>\n    <script src='dark-mode-switch.js'></script>\n  </div>\n  <div class='row'>\n    <h1>");
-            
-            #line 41 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_model.FileName));
-            
-            #line default
-            #line hidden
-            this.Write(" (только различия)</h1>\n  </div>\n  <div class='row'>\n    <div class='spoiler-trigger-all-div'>\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\n        <span style='display: none;'>Свернуть всё</span>\n        <span>Развернуть всё</span>\n      </a>\n    </div>\n  </div>\n  ");
-            #line 51 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
+            this.Write("\n");
+            #line 4 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
 
-    if (_model.TypesAdded.Any())
+    foreach (var fileChangesToStudy in _model)
     {
+        foreach (var typeToStudy in fileChangesToStudy.TypesToStudy)
+        {
 
             
             #line default
             #line hidden
-            this.Write("    <div class='row'>\n      <h2>Добавленные типы</h2>\n      <table title='Добавленные типы' class='table table-hover'>\n        <thead>\n        <tr><th width='100%'>Имя типа</th></tr>\n        </thead>\n        <tbody>\n        ");
-            #line 62 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
+            this.Write("file=");
+            
+            #line 10 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fileChangesToStudy.FileName));
+            
+            #line default
+            #line hidden
+            this.Write(",type=");
+            
+            #line 10 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(typeToStudy));
+            
+            #line default
+            #line hidden
+            this.Write("\n");
+            #line 11 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
 
-    foreach (var typeName in _model.TypesAdded)
-    {
+        }
+        foreach (var methodToStudy in fileChangesToStudy.MethodsToStudy)
+        {
 
             
             #line default
             #line hidden
-            this.Write("          <tr><td><span class='folder-name'>");
+            this.Write("file=");
             
-            #line 66 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(typeName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n        ");
-            #line 67 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    } 
+            #line 16 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fileChangesToStudy.FileName));
             
             #line default
             #line hidden
-            this.Write("        </tbody>\n      </table>\n    </div>\n  ");
-            #line 72 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
+            this.Write(",method=");
+            
+            #line 16 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(methodToStudy));
+            
+            #line default
+            #line hidden
+            this.Write("\n");
+            #line 17 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/ChangesToStudyTemplate.tt"
 
+        }
     }
-    if (_model.TypesRemoved.Any())
-    {
 
             
             #line default
             #line hidden
-            this.Write("    <div class='row'>\n      <h2>Удалённые типы</h2>\n      <table title='Удалённые типы' class='table table-hover'>\n        <thead>\n        <tr><th width='100%'>Имя типа</th></tr>\n        </thead>\n        <tbody>\n        ");
-            #line 84 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var typeName in _model.TypesRemoved)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("          <tr><td><span class='folder-name'>");
-            
-            #line 88 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(typeName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n        ");
-            #line 89 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    } 
-            
-            #line default
-            #line hidden
-            this.Write("        </tbody>\n      </table>\n    </div>\n  ");
-            #line 94 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    } 
-            
-            #line default
-            #line hidden
-            this.Write("\n  <div class='row'>\n    <h2>Типы в обоих файлах</h2>\n    <table title='Типы в обоих файлах' class='table table-hover'>\n      <thead>\n      <tr>\n        <th width='50%'>Метод в старом фрэймворке</th>\n        <th width='50%'>Метод в новом фрэймворке</th>\n      </tr>\n      </thead>\n      <tbody>\n      ");
-            #line 107 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var typeCompareResult in _model.TypesCompareResult)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("        <tr><td colspan='2'><span class='folder-name' style='color: #204d74'>");
-            
-            #line 111 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(typeCompareResult.TypeName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr> \n        ");
-            #line 112 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    if (typeCompareResult.MethodsAdded.Any())
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("          <tr><td colspan='2'>Добавленные методы</td></tr>\n          ");
-            #line 117 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var methodName in typeCompareResult.MethodsAdded)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("            <tr><td colspan='2'><span class='folder-name'>");
-            
-            #line 121 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n          ");
-            #line 122 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    }
-    }
-    if (typeCompareResult.MethodsRemoved.Any())
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("          <tr><td colspan='2'>Удалённые методы</td></tr>\n          ");
-            #line 129 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var methodName in typeCompareResult.MethodsRemoved)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("            <tr><td colspan='2'><span class='folder-name'>");
-            
-            #line 133 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n          ");
-            #line 134 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    }
-    }
-    if (typeCompareResult.MethodsCompareResult.Any())
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("          <tr><td colspan='2'>Методы в обоих типах</td></tr>\n          ");
-            #line 141 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("            <tr><td colspan='2'><span class='folder-name'>");
-            
-            #line 145 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodsCompareResult.MethodName));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n            <tr><td colspan='2'><span class='folder-name'>");
-            
-            #line 146 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(methodsCompareResult.MethodBodyStatus));
-            
-            #line default
-            #line hidden
-            this.Write("</span></td></tr>\n            <tr>\n              <td>\n                ");
-            #line 149 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var line in methodsCompareResult.OldMethodBody)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("                  ");
-            
-            #line 153 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(line));
-            
-            #line default
-            #line hidden
-            this.Write("<br/>\n                ");
-            #line 154 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    } 
-            
-            #line default
-            #line hidden
-            this.Write("              </td>\n              <td>\n                ");
-            #line 158 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    foreach (var line in methodsCompareResult.NewMethodBody)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("                  ");
-            
-            #line 162 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(line));
-            
-            #line default
-            #line hidden
-            this.Write("<br/>\n                ");
-            #line 163 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    } 
-            
-            #line default
-            #line hidden
-            this.Write("              </td>\n            </tr>\n          ");
-            #line 167 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/CompareTemplate.tt"
-
-    }
-    }
-    } 
-            
-            #line default
-            #line hidden
-            this.Write("      </tbody>\n    </table>\n  </div>\n</div>\n</body>\n\n</html>\n\n");
+            this.Write("\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -295,7 +110,7 @@ using System.Linq;
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("JetBrains.ForTea.TextTemplating", "42.42.42.42")]
-    public class CompareTemplateBase
+    public class ChangesToStudyTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

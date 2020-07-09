@@ -139,33 +139,33 @@
 #>
           <tr><td colspan='2'>Методы в обоих типах</td></tr>
           <#
-        foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
-        {
+    foreach (var methodsCompareResult in typeCompareResult.MethodsCompareResult)
+    {
 #>
             <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodName #></span></td></tr>
             <tr><td colspan='2'><span class='folder-name'><#= methodsCompareResult.MethodBodyStatus #></span></td></tr>
             <tr>
               <td>
                 <#
-            foreach (var line in methodsCompareResult.OldMethodBody)
-            {
+    foreach (var line in methodsCompareResult.OldMethodBody)
+    {
 #>
                   <#= line #><br/>
                 <#
-            } #>
+    } #>
               </td>
               <td>
                 <#
-            foreach (var line in methodsCompareResult.NewMethodBody)
-            {
+    foreach (var line in methodsCompareResult.NewMethodBody)
+    {
 #>
                   <#= line #><br/>
                 <#
-            } #>
+    } #>
               </td>
             </tr>
           <#
-        }
+    }
     }
     } #>
       </tbody>

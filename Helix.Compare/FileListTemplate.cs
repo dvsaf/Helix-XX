@@ -36,7 +36,28 @@ namespace Helix.Compare
         public virtual string TransformText()
         {
             
-            this.Write("\n<!DOCTYPE html>\n<html>\n\n<head lang='ru'>\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n  <title>@Model.Title</title>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\n  <link rel='stylesheet' href='bootstrap.css'>\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\n  <script src='jquery-3.5.1.js'></script>\n  <script src='bootstrap.js'></script>\n  <script>\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\n      $(this).find(\"span\").toggle();\n    });\n\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\n      $(\".spoiler-block\").slideToggle(300);\n      $(this).find(\"span\").toggle()\n    });\n  </script>\n</head>\n\n<body>\n<div class='container'>\n  <div class='row'>\n    <div class='col-md-2 col-md-offset-10'>\n      <label class='switch'>\n        <input type='checkbox' id='darkSwitch'>\n        <span class='slider round'></span>\n      </label>\n      <label for='darkSwitch'>Ночной режим</label>\n    </div>\n    <script src='dark-mode-switch.js'></script>\n  </div>\n  <div class='row'>\n    <h1>@Model.Title</h1>\n  </div>\n  <div class='row'>\n    <div class='spoiler-trigger-all-div'>\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\n        <span style='display: none;'>Свернуть всё</span>\n        <span>Развернуть всё</span>\n      </a>\n    </div>\n  </div>\n  <div class='row'>\n    <table title='@Model.Title' class='table table-hover'>\n      <thead>\n      <tr>\n        <th width='100%'>Имя файла</th>\n      </tr>\n      </thead>\n      <tbody>\n      ");
+            this.Write("\n<!DOCTYPE html>\n<html>\n\n<head lang='ru'>\n  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n  <title>");
+            
+            #line 8 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_model.Title));
+            
+            #line default
+            #line hidden
+            this.Write("</title>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>\n  <link rel='stylesheet' href='bootstrap.css'>\n  <link rel='stylesheet' type='text/css' href='stylesheet.css'>\n  <script src='jquery-3.5.1.js'></script>\n  <script src='bootstrap.js'></script>\n  <script>\n    $(document).on(\"click\", \".spoiler-trigger\", function () {\n      $(this).parents(\"tr\").nextUntil(\":not(.spoiler-block)\").slideToggle(300);\n      $(this).find(\"span\").toggle();\n    });\n\n    $(document).on(\"click\", \".spoiler-trigger-all\", function () {\n      $(\".spoiler-block\").slideToggle(300);\n      $(this).find(\"span\").toggle()\n    });\n  </script>\n</head>\n\n<body>\n<div class='container'>\n  <div class='row'>\n    <div class='col-md-2 col-md-offset-10'>\n      <label class='switch'>\n        <input type='checkbox' id='darkSwitch'>\n        <span class='slider round'></span>\n      </label>\n      <label for='darkSwitch'>Ночной режим</label>\n    </div>\n    <script src='dark-mode-switch.js'></script>\n  </div>\n  <div class='row'>\n    <h1>");
+            
+            #line 40 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_model.Title));
+            
+            #line default
+            #line hidden
+            this.Write("</h1>\n  </div>\n  <div class='row'>\n    <div class='spoiler-trigger-all-div'>\n      <a href='javascript:void(0);' class='spoiler-trigger-all'>\n        <span style='display: none;'>Свернуть всё</span>\n        <span>Развернуть всё</span>\n      </a>\n    </div>\n  </div>\n  <div class='row'>\n    <table title='");
+            
+            #line 51 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_model.Title));
+            
+            #line default
+            #line hidden
+            this.Write("' class='table table-hover'>\n      <thead>\n      <tr>\n        <th width='100%'>Имя файла</th>\n      </tr>\n      </thead>\n      <tbody>\n      ");
             #line 58 "/Users/dvsaf/Projects/Helix-XX/Helix.Compare/FileListTemplate.tt"
 
     foreach (var folder in _model.FileTree)

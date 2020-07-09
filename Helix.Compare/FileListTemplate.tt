@@ -5,7 +5,7 @@
 
 <head lang='ru'>
   <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-  <title>@Model.Title</title>
+  <title><#= _model.Title #></title>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
   <link rel='stylesheet' href='bootstrap.css'>
   <link rel='stylesheet' type='text/css' href='stylesheet.css'>
@@ -37,7 +37,7 @@
     <script src='dark-mode-switch.js'></script>
   </div>
   <div class='row'>
-    <h1>@Model.Title</h1>
+    <h1><#= _model.Title #></h1>
   </div>
   <div class='row'>
     <div class='spoiler-trigger-all-div'>
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class='row'>
-    <table title='@Model.Title' class='table table-hover'>
+    <table title='<#= _model.Title #>' class='table table-hover'>
       <thead>
       <tr>
         <th width='100%'>Имя файла</th>
