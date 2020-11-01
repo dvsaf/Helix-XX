@@ -204,12 +204,8 @@ namespace Helix.Compare
                         ? MethodBodyStatus.Added
                         : MethodBodyStatus.Same;
 
-            var oldMethodBody = GetMethodBodyText(methodDef462);
-            var newMethodBody = GetMethodBodyText(methodDef48);
-            if (oldMethodBody.Contains("\uD800"))
-                throw new InvalidOperationException();
-            if (newMethodBody.Contains("\uD800"))
-                throw new InvalidOperationException();
+            var oldMethodBody = LimitMethodBodyText(GetMethodBodyText(methodDef462), 20);
+            var newMethodBody = LimitMethodBodyText(GetMethodBodyText(methodDef48), 20);
 
             if (oldMethodBody.Count != newMethodBody.Count
                 || oldMethodBody.Zip(newMethodBody).Any(tuple => tuple.First != tuple.Second))
@@ -224,6 +220,11 @@ namespace Helix.Compare
                 methodDef.MethodBody is CilBody body
                     ? body.Instructions.Select(instruction => instruction.ToString()).ToImmutableList()
                     : ImmutableList<string>.Empty;
+        }
+
+        private static ImmutableList<string> LimitMethodBodyText(ImmutableList<string> fullBody, int linesLimit)
+        {
+            return fullBody.Skip(linesLimit).Any() ? fullBody.Take(linesLimit).Append("…").ToImmutableList() : fullBody;
         }
 
         private static (string oldFxFolder, string newFxFolder) ParseCommandLine(IEnumerable<string> args)

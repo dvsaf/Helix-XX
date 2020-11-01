@@ -8,6 +8,10 @@
     "Helix.Compare — macOS": {
       "commandName": "Project",
       "commandLineArgs": "--old-fx=/Users/dvsaf/Work/Helix-XX/Executables462 --new-fx=/Users/dvsaf/Work/Helix-XX/Executables48"
+    },
+    "Helix.Compare — Linux": {
+      "commandName": "Project",
+      "commandLineArgs": "--old-fx=/home/dvsaf/Work/Helix-XX/Executables462 --new-fx=/home/dvsaf/Work/Helix-XX/Executables48"
     }
   }
 }
