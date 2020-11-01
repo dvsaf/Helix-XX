@@ -23,7 +23,7 @@ namespace Helix.Extract
                 .ToList();
 
             Console.WriteLine("Исполнимые файлы:");
-            foreach (var sourceFileName in allFiles.Where(PeFile.IsPeFile))
+            foreach (var sourceFileName in allFiles.Where(fileName => PeFile.IsPeFile(fileName) || ElfFile.IsElfFile(fileName)))
             {
                 var relativeFileName = Path.GetRelativePath(sourceFolder, sourceFileName);
                 Console.WriteLine("  " + relativeFileName);

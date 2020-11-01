@@ -206,6 +206,10 @@ namespace Helix.Compare
 
             var oldMethodBody = GetMethodBodyText(methodDef462);
             var newMethodBody = GetMethodBodyText(methodDef48);
+            if (oldMethodBody.Contains("\uD800"))
+                throw new InvalidOperationException();
+            if (newMethodBody.Contains("\uD800"))
+                throw new InvalidOperationException();
 
             if (oldMethodBody.Count != newMethodBody.Count
                 || oldMethodBody.Zip(newMethodBody).Any(tuple => tuple.First != tuple.Second))
